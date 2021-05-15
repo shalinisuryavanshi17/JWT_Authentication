@@ -38,13 +38,20 @@ module.exports.signup_post = async (req, res) => {
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * maxAge });
     res.status(201).json({ user: user._id });
-    console.log(user)
+    console.log(user);
   } catch (error) {
     const errors = handleErrors(error);
     res.status(400).json({ errors });
   }
 };
-module.exports.login_post = (req, res) => {
-  res.send("authenticate login");
+module.exports.login_post = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.login(email, password);
+    res.status(200).json({ user: user._id });
+  
+  } catch (err) {
+       res.status(400).json({});
+  }
 };
 //exporting get,post methods
