@@ -3,12 +3,20 @@
   <h2>Sign Up</h2>
   <label for="email">Email</label>
   <input type="text" name="email" required />
+  <div class="email error"></div>
   <label for="password">Password</label>
+
   <input type="password" name="password" required />
+  <div class="password error"></div>
   <button>Sign Up</button>
 </form>
 <script>
   const form = document.querySelector("form");
+  const emailError = document.querySelector(".email.error");
+  const passwordError = document.querySelector(".password.error");
+  //reset errors
+  emailError.textContent=''
+  passwordError.textContent=''
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = form.email.value;
@@ -19,8 +27,19 @@
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
       });
-    } catch (error) {
-      console.log("error");
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        //updating email error from the errors obj
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+      }
+      if(data.user)
+      {
+          location.assign('/')//redirect to home page
+      }
+    } catch (err) {
+      console.log(err);
     }
   });
 </script>
