@@ -33,8 +33,9 @@ app.get("/smoothies", (req, res) => res.render("smoothies"));
 app.use(authRoutes);
 app.use(sampleRoutes);
 
-app.get("/set-cookies", (req, res) => {
-  //res.setHeader("Set-Cookie", "hello=true");
-   res.cookie('newUser','false',{httpOnly:true})//httponly is used to avoid fetchinhg user data on the client side
-  res.send("you got the cookie!!!!!!!!!");
-});
+// app.get("/set-cookies", (req, res) => {
+//   //res.setHeader("Set-Cookie", "hello=true");
+//    res.cookie('newUser','false',{httpOnly:true})//httponly is used to avoid fetchinhg user data on the client side
+//   res.send("you got the cookie!!!!!!!!!");
+// });
+
