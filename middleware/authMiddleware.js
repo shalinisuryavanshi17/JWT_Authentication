@@ -18,18 +18,18 @@ const requireAuth = (req, res, next) => {
   }
 };
 //checking current user
-const checkUser = async (req, res, next) => {
+const checkUser =   (req, res, next) => {
   const token = req.cookies.jwt;
   //check for token and check is token verified
   if (token) {
-    jwt.verify(token, "this is my secret", (err, decodedToken) => {
+    jwt.verify(token, "this is my secret", async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.locals.user = null;
         next();
       } else {
         console.log(decodedToken);
-        let user = await User.findById(decodedToken.id);
+        const user = await User.findById(decodedToken.id);
         res.locals.user = user;
         next();
       }
