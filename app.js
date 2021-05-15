@@ -9,12 +9,12 @@ const { requireAuth, checkUser } = require("./middleware/authMiddleware");
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
+require('dotenv').config()
 // view engine
 app.set("view engine", "ejs");
 
 // database connection
-const dbURI =
-  "mongodb+srv://admin-shalini:shalini123@cluster0.khusc.mongodb.net/node-auth";
+const dbURI=process.env.DB_URI
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
